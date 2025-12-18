@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bootstrap demo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+</head>
+
+<body>
+  <h1 class="text-center my-5">Display Fruits</h1>
+
+  <div class="container w-50">
+    <button class="btn btn-primary my-2" id="btnDisplay">
+      Display Fruits
+    </button>
+    <table class="table table-striped table-hover">
+      <thead>
+        <th>Name</th>
+        <th>Color</th>
+        <th>Price</th>
+        <th>Action</th>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+
+  <script>
+    let fruitArray = [
+      { name: "Apple", color: "red", price: 100 },
+      { name: "Banana", color: "yellow", price: 10 },
+      { name: "Mango", color: "yellow", price: 50 },
+      { name: "Stawberry", color: "red", price: 5 },
+      { name: "Orange", color: "orange", price: 20 },
+      { name: "Kiwi", color: "brown", price: 200 },
+    ];
+
+    let btnDisplay = document.getElementById("btnDisplay");
+    let tbody = document.getElementById("tbody");
+
+    function displayFruits() {
+      console.log("display fruits");
+
+      
+      tbody.innerHTML = "";
+
+      fruitArray.map((fruit, index) => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${fruit.name}</td>
+            <td>${fruit.color}</td>
+            <td>${fruit.price}</td>
+            <td><button class="btn btn-danger btn-sm" onclick="removeItem(${index})">Remove</button></td>
+          </tr>
+          `;
+      });
+    }
+
+    // remove item function
+    function removeItem(index) {
+      console.log("remove item clicked and index: ", index);
+      fruitArray.splice(index, 1);
+      displayFruits();
+    }
+
+    // display fruits
+    btnDisplay.addEventListener("click", displayFruits);
+  </script>
+</body>
+
+</html>
