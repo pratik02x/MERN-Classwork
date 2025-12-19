@@ -1,7 +1,12 @@
 const express=require("express");
+const cryptojs = require('crypto-js');
+const jwt=require("jsonwebtoken");
+
+
 const pool=require("../db/pool");
 const result=require("../utils/result");
-const cryptojs = require('crypto-js');
+const consfig=require("../utils/config");
+
 const { error } = require("node:console");
 
 const router=express.Router();
@@ -27,13 +32,25 @@ router.post("/signin", (req,res)=>{
             res.send(result.createResult("Invalid email or password"));
         }
         else{
-            res.send(result.createResult(null,data));
+            const user=data[0];
+            const payload={
+                email:user.email,
+                uid:user.uid
+            };
+            const token=jwt.sign(payload,consfig.SECRET);
+
+            const userData={
+                name:user.name,
+                mobile:user.mobile,
+                token
+            }
+            res.send(result.createResult(null,userData));
         }
     })
 })
 
 router.get("/get",(req,res)=>{
-    const{ email }=req.query;
+    const email =req.headers.email;
     const sql=`SELECT * FROM users WHERE email=?`;
     
     pool.query(sql,[email],(error,data)=>{
@@ -41,8 +58,8 @@ router.get("/get",(req,res)=>{
     })
 });
 
-router.delete("/delete/:uid",(req,res)=>{
-    const {uid}=req.params;
+router.delete("/delete",(req,res)=>{
+    const uid=req.headers.uid;
     const sql=`DELETE FROM users WHERE uid=?`;
     pool.query(sql,[uid],(error,data)=>{
         res.send(result.createResult(error,data));
