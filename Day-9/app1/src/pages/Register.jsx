@@ -13,16 +13,16 @@ function Register() {
   const signup=async(event)=>{
 
     if(name==""){
-      toast.error("Name required")
+      toast.warn("Name required")
     }
     else if(email==""){
-        toast.error("eamil required")
+        toast.warn("eamil required")
     }
     else if(course_id==""){
-        toast.error("course id required")
+        toast.warn("course id required")
     }
     else if(mobile_no==""){
-        toast.error("mobile number reduired")
+        toast.warn("mobile number reduired")
     }
 
 

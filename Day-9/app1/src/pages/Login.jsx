@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
 import { Link, useNavigate } from 'react-router'
-import Register from './Register'
+
 import { useState } from 'react'
 import { loginUser } from '../services/userservice'
 
